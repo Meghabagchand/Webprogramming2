@@ -1,16 +1,29 @@
-<!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+html xmlns:th="http://www.thymeleaf.org">
 <head>
     <title>Submitted Data</title>
 </head>
 <body>
-    <h2>Submitted Registration Data</h2>
-
-    <p><strong>Username:</strong> <span th:text="${user.name}"></span></p>
-    <p><strong>Password:</strong> <span th:text="${user.password}"></span></p>
-    <p><strong>Email:</strong> <span th:text="${user.email}"></span></p>
-    <p><strong>Date of Birth:</strong> <span th:text="${user.dob}"></span></p>
-
-    <a href="/result">Back to Registration</a>
+	<h1>Customer Feedback List</h1>
+	    <table>
+	        <thead>
+	            <tr>
+	                <th>ID</th>
+	                <th>Name</th>
+	                <th>Email</th>
+	                <th>Actions</th>
+	            </tr>
+	        </thead>
+	        <tbody>
+	            <tr th:each="patient : ${customers}">
+	                <td th:text="${customer.id}"></td>
+	                <td th:text="${customer.name}"></td>
+	                <td th:text="${customer.email}"></td>
+	                
+	                </td>
+	            </tr>
+	        </tbody>
+	    </table>
 </body>
 </html>
+
+

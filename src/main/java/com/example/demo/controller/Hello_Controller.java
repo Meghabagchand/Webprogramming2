@@ -70,4 +70,15 @@ public class Hello_Controller {
         // Return the result view (result.html) to display the submitted data
         return "result";
     }
+    @GetMapping("/register")
+    public String registerPage() {
+        return "register";  
+    }
+    @PostMapping("/register")
+    public String reusltData(@ModelAttribute Data user, Model model) {
+    	return "result";
+        // ... logic ...
+    }
+
 }
+
