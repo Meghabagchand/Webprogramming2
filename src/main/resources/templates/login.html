@@ -7,9 +7,9 @@
 	<h3>login</h3>
 	<form action="#" th:action="@{/login/adduser}" th:object="${user}" enctype="multipart/form-data" method="post">
 		<span th:if="${error}" th:text="${error}"></span>
-		<label for="name">Name</label>
-		<input type="text" th:field="*{name}" id="name" placeholder="Name">
-		<span th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></span>
+		<label for="username">Name</label>
+		<input type="text" th:field="*{username}" id="username" placeholder="Username">
+		<span th:if="${#fields.hasErrors('username')}" th:errors="*{username}"></span>
 
 		
 		<label for="password">Password</label>
