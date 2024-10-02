@@ -1,56 +1,81 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
   <head>
-    <meta charset="UTF-8" />
-    <meta
-      name="viewport"
-      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    <link rel="StyleSheet" href="/css/hello.css" />
+    <title>Login | Feedback Management System</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Manrope:wght@200..800&display=swap"
+      rel="stylesheet"
     />
-    <link rel="stylesheet" href="login.css" />
-    <title>Login Page</title>
   </head>
   <body>
-    <div class="form__body">
-      <h3>login</h3>
-      <form
-        th:action="@{/login/adduser}"
-        th:object="${user}"
-        enctype="multipart/form-data"
-        method="post"
+    <nav class="navbar">
+      <a href="/" style="text-decoration: none; color: black"
+        ><p style="font-weight: 800">Feedback Form</p></a
       >
-        <span th:if="${loginError}" th:text="${loginError}"></span>
-        <div class="input">
-          <label for="username">Name</label>
-          <input
-            type="text"
-            th:field="*{username}"
-            id="username"
-            placeholder="Username"
-          />
-          <span
-            th:if="${#fields.hasErrors('username')}"
-            th:errors="*{username}"
-          ></span>
+      <ul class="nav">
+        <li>Home</li>
+        <li>About</li>
+        <li>Form</li>
+        <li>Contact</li>
+        <div class="navbar__btn">
+          <a href="/login"><button class="btn outline">Login</button></a>
+          <!-- <a href="/register"><button class="btn filled">Register</button></a> -->
         </div>
+      </ul>
+    </nav>
 
-        <div class="input">
-          <label for="password">Password</label>
-          <input
-            type="password"
-            th:field="*{password}"
-            id="password"
-            placeholder="Password"
-          />
-          <span
-            th:if="${#fields.hasErrors('password')}"
-            th:errors="password"
-          ></span>
-        </div>
+    <main>
+      <div class="form__body">
+        <h3>login</h3>
+        <form
+          th:action="@{/login/adduser}"
+          th:object="${user}"
+          enctype="multipart/form-data"
+          method="post"
+        >
+          <span th:if="${loginError}" th:text="${loginError}"></span>
+          <div class="input">
+            <label for="username">Username</label>
+            <input
+              type="text"
+              th:field="*{username}"
+              id="username"
+              placeholder="Enter your Username"
+            />
+            <span
+              th:if="${#fields.hasErrors('username')}"
+              th:errors="*{username}"
+            ></span>
+          </div>
 
-        <div class="input__btn">
-          <input type="submit" value="Login" />
-        </div>
-      </form>
-    </div>
+          <div class="input">
+            <label for="password">Password</label>
+            <input
+              type="password"
+              th:field="*{password}"
+              id="password"
+              placeholder="Enter your Password"
+            />
+            <span
+              th:if="${#fields.hasErrors('password')}"
+              th:errors="password"
+            ></span>
+          </div>
+
+          <div class="input__btn">
+            <input type="submit" value="Login" />
+          </div>
+        </form>
+      </div>
+    </main>
+
+    <footer>
+      <p class="text">This page is for Making CMS system using Spring Boot</p>
+
+      <p class="aa">&copy;2024 - All Rights Reserved</p>
+    </footer>
   </body>
 </html>

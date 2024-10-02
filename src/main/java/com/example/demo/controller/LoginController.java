@@ -1,5 +1,6 @@
 package com.example.demo.controller;
 
+import com.example.demo.entity.Customer;
 import com.example.demo.entity.User;
 import com.example.demo.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,13 +26,13 @@ public class LoginController {
     // Show login form
     @GetMapping("/login")
     public String showLoginForm(Model model) {
-        // model.addAttribute("user", new User());
+        model.addAttribute("user", new User());
         return "login";
     }
 
     @PostMapping("/login/adduser")
     public String addUser(@ModelAttribute("user") User user, Model model, RedirectAttributes redirectAttributes) {
-        if (userService.addUser(user.getUsername(), user.getRole(), user.getPassword())) {
+        if (userService.addUser(user.getUsername(), user.getEmail(), user.getRole(), user.getPassword())) {
             return "redirect:/add";
         } else {
             model.addAttribute("loginError", "Invalid username or password.");
@@ -40,31 +41,28 @@ public class LoginController {
         }
     }
 
-    // Show registration form
     @GetMapping("/register")
     public String registerPage(Model model) {
-        model.addAttribute("user", new User());
+        model.addAttribute("customer", new Customer());
         return "register";
     }
 
-    // Process registration form
     @PostMapping("/register")
-    public String processRegistration(@ModelAttribute("user") User user, BindingResult result, Model model) {
-        // Validate the registration data
+    public String processRegistration(@ModelAttribute("customer") Customer customer, BindingResult result,
+            Model model) {
+
         if (result.hasErrors()) {
             return "register";
         }
 
-        // Check if the user already exists
-        if (userService.checkIfUserExists(user.getUsername())) {
+        if (userService.checkIfUserExists(customer.getName())) {
             model.addAttribute("registrationError", "Username already exists.");
             return "register";
         }
 
-        // Save the new user
-        userService.addUser(user.getName(), user.getEmail(), user.getUsername(), user.getPassword());
+        userService.addUser(customer.getName(), customer.getEmail(), customer.getPhone(), customer.getPassword());
         model.addAttribute("message", "Registration successful! Please log in.");
-        return "redirect:/login"; // Redirect to login page after registration
+        return "redirect:/login";
     }
 
     // Show result page

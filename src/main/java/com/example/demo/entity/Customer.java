@@ -26,10 +26,14 @@ public class Customer {
     @Email(message = "Email should be valid")
     private String email;
 
-    private Date dob;  // Date of Birth
+    @NotEmpty(message = "Phone Number is required")
+    private String phone;
+
+    private Date dob; // Date of Birth
 
     // Default constructor
-    public Customer() {}
+    public Customer() {
+    }
 
     // Getters and Setters
 
@@ -72,6 +76,12 @@ public class Customer {
     public void setDob(Date dob) {
         this.dob = dob;
     }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
 }
-
-

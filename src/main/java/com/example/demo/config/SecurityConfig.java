@@ -20,8 +20,6 @@ import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 
-
-
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig {
@@ -39,7 +37,7 @@ public class SecurityConfig {
 			@Override
 			public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 				// TODO Auto-generated method stub
-				User user=  userRepository.findByUsername(username);
+				User user = userRepository.findByUsername(username);
 				return user;
 
 			}
@@ -59,34 +57,34 @@ public class SecurityConfig {
 	SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 
 		return http.csrf(csrf -> csrf.disable()).authorizeHttpRequests(requests -> requests
-						.requestMatchers("/register", "/login", "/","/error")
-						.permitAll()
+				.requestMatchers("/register", "/login", "/", "/error").permitAll()
+				.requestMatchers("/css/**", "/js/**", "/images/**").permitAll()
 
-//						.requestMatchers("/hotel/**", "/user/**").hasRole("ADMIN")
-//						.requestMatchers("/rating/**")
-//						.hasRole("USER")
-						.anyRequest().authenticated())
+				// .requestMatchers("/hotel/**", "/user/**").hasRole("ADMIN")
+				// .requestMatchers("/rating/**")
+				// .hasRole("USER")
+				.anyRequest().authenticated())
 
 				.formLogin(f -> f.loginPage("/login").defaultSuccessUrl("/")).build();
 	}
 
-//	@Bean
-//	SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-//
-//		return http.csrf(csrf -> csrf.disable())
-//				.authorizeHttpRequests(
-//						requests -> requests
-//								.requestMatchers("/login", "/validatelogin/**", "/css/**", "image/**",
-//										"/hotel/fetch/**", "/hotel/fetch-hotels/**", "/logout")
-//								.permitAll().anyRequest().authenticated())
-//
-//				.formLogin(f -> f.loginPage("/login")).build();
-//	}
+	// @Bean
+	// SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+	//
+	// return http.csrf(csrf -> csrf.disable())
+	// .authorizeHttpRequests(
+	// requests -> requests
+	// .requestMatchers("/login", "/validatelogin/**", "/css/**", "image/**",
+	// "/hotel/fetch/**", "/hotel/fetch-hotels/**", "/logout")
+	// .permitAll().anyRequest().authenticated())
+	//
+	// .formLogin(f -> f.loginPage("/login")).build();
+	// }
 
 	@Bean
 	static PasswordEncoder passwordEncoder() {
 		return new BCryptPasswordEncoder();
-//		return NoOpPasswordEncoder.getInstance();
+		// return NoOpPasswordEncoder.getInstance();
 	}
 
 }
