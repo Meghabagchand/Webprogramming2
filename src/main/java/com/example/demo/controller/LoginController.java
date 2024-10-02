@@ -8,12 +8,14 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.bind.annotation.ModelAttribute;
 
 @Controller
 public class LoginController {
     @Autowired
-    UserService userService;
+    private UserService userService;
+
     @GetMapping("/")
     public String hello() {
         return "hello";
@@ -21,35 +23,36 @@ public class LoginController {
 
     @GetMapping("/login")
     public String showLoginForm(Model model) {
-
         model.addAttribute("user", new User());
         return "login";
     }
 
     @PostMapping("/login/adduser")
-    public String addUser(@ModelAttribute("user") User user, Model model) {
-        if (userService.addUser(user.getUsername(), user.getPassword())) {
+    public String addUser(@ModelAttribute("user") User user, Model model, RedirectAttributes redirectAttributes) {
+        if (userService.addUser(user.getUsername(), user.getRole(), user.getPassword())) {
             return "redirect:/add";
         } else {
             model.addAttribute("loginError", "Invalid username or password.");
+            redirectAttributes.addFlashAttribute("errorMessage", "Username cannot be empty.");
             return "login";
         }
     }
 
-//    @GetMapping("/add")
-//    public String showRegistrationForm(Model model) {
-//        model.addAttribute("user", new Data());  
-//        return "add";
-//    }
-//
-//    @PostMapping("/add")
-//    public String processRegistration(@ModelAttribute("user") Data user, BindingResult result, Model model) {
-//        if (result.hasErrors()) {
-//            return "add";
-//        }
-//        model.addAttribute("message", "Registration successful!");
-//        return "success";
-//    }
+    @GetMapping("/add")
+    public String showRegistrationForm(Model model) {
+        model.addAttribute("user");
+        return "add";
+    }
+
+    // @PostMapping("/add")
+    // public String processRegistration(@ModelAttribute("user") Data user,
+    // BindingResult result, Model model) {
+    // if (result.hasErrors()) {
+    // return "add";
+    // }
+    // model.addAttribute("message", "Registration successful!");
+    // return "success";
+    // }
 
     @GetMapping("/result")
     public String showResult(Model model) {
@@ -66,13 +69,22 @@ public class LoginController {
         return "result";
     }
 
-    @GetMapping("/register")
-    public String registerPage() {
-        return "register"; 
-    }
+    // @GetMapping("/register")
+    // public String registerPage() {
+    // return "register";
+    // }
 
-    @PostMapping("/register")
-    public String resultData(@ModelAttribute User user, Model model) {
-        return "result";
-    }
+    // @PostMapping("/register")
+    // public String resultData(@ModelAttribute User user, Model model) {
+    // boolean isRegistered = userService.registerUser(user.getUsername(),
+    // user.getPassword(),
+    // user.getRole());
+
+    // if (isRegistered) {
+    // return "result";
+    // } else {
+    // model.addAttribute("errorMessage", "Username already exists.");
+    // return "register";
+    // }
+    // }
 }
