@@ -16,8 +16,12 @@ public class UserService {
     private PasswordEncoder passwordEncoder;
 
     public boolean addUser(String name, String email, String username, String password) {
-        User user = new User();
+        User userFind = userRepository.findByUsername(username);
         String encodedPassword = passwordEncoder.encode(password);
+        if (userFind != null)
+            return false;
+
+        User user = new User();
         user.setName(name);
         user.setEmail(email);
         user.setUsername(username);

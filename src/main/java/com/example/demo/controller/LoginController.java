@@ -19,7 +19,7 @@ public class LoginController {
     private UserService userService;
 
     @GetMapping("/")
-    public String hello() {
+    public String hello(Model model) {
         return "hello";
     }
 
@@ -32,13 +32,13 @@ public class LoginController {
 
     @PostMapping("/login/adduser")
     public String addUser(@ModelAttribute("user") User user, Model model, RedirectAttributes redirectAttributes) {
-        if (userService.addUser(user.getUsername(), user.getEmail(), user.getRole(), user.getPassword())) {
-            return "redirect:/add";
+        if (userService.addUser(user.getName(), user.getEmail(), user.getUsername(), user.getPassword())) {
+            return "redirect:/result";
         } else {
             model.addAttribute("loginError", "Invalid username or password.");
-            redirectAttributes.addFlashAttribute("errorMessage", "Username cannot be empty.");
-            return "login";
+            return "redirect:/";
         }
+
     }
 
     @GetMapping("/register")

@@ -9,6 +9,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
+import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -56,15 +57,16 @@ public class SecurityConfig {
 	@Bean
 	SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 
-		return http.csrf(csrf -> csrf.disable()).authorizeHttpRequests(requests -> requests
-				.requestMatchers("/register", "/login", "/", "/error").permitAll()
-				.requestMatchers("/css/**", "/js/**", "/images/**").permitAll()
+		return http.csrf(csrf -> csrf.disable())
+				.authorizeHttpRequests(requests -> requests
+						.requestMatchers("/register", "/login", "/login/adduser", "/", "/error", "/css/**", "/js/**",
+								"/images/**")
+						.permitAll()
 
-				// .requestMatchers("/hotel/**", "/user/**").hasRole("ADMIN")
-				// .requestMatchers("/rating/**")
-				// .hasRole("USER")
-				.anyRequest().authenticated())
-
+						// .requestMatchers("/hotel/**", "/user/**").hasRole("ADMIN")
+						// .requestMatchers("/rating/**")
+						// .hasRole("USER")
+						.anyRequest().authenticated())
 				.formLogin(f -> f.loginPage("/login").defaultSuccessUrl("/")).build();
 	}
 
