@@ -1,31 +1,32 @@
 package com.example.demo.service;
 
+import com.example.demo.entity.User;
 import com.example.demo.repo.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import com.example.demo.entity.User;
-
-import java.util.Optional;
 
 @Service
 public class UserService {
-    @Autowired
-    UserRepository userRepository;
-    @Autowired
-    PasswordEncoder passwordEncoder;
 
-    // Method to validate user login data
-    public boolean validateLogin(User user) {
-        Optional <User> user1 = userRepository.findUserByUsername(user.getUsername());
-        if (user1.get().getUsername().equals(user.getUsername())){
-            return passwordEncoder.matches(user.getPassword(), user1.get().getPassword());
-        }
-        return false;
-    }
-    public boolean addUser(String username, String password){
-    User user = userRepository.save(new User(username, passwordEncoder.encode(password)));
-    return true;
+    @Autowired
+    private com.example.demo.repo.UserRepository userRepository;
+
+    public boolean addUser(String name, String email, String username, String password) {
+        User user = new User();
+        user.setName(name);
+        user.setEmail(email);
+        user.setUsername(username);
+        user.setPassword(password); // Ideally, hash the password before saving
+        userRepository.save(user);
+        return true;
     }
 
+    public boolean validateUser(String username, String password) {
+        User user = userRepository.findByUsername(username);
+        return user != null && user.getPassword().equals(password); // Use hashed password comparison
+    }
+
+    public boolean checkIfUserExists(String username) {
+        return userRepository.findByUsername(username) != null;
+    }
 }

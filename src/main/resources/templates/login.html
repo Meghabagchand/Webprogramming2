@@ -1,22 +1,31 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-<link rel="stylesheet" href="/style.css" />
+	<title>Login</title>
+	<link rel="stylesheet" href="/css/login.css">
 </head>
 <body>
-	<h3>login</h3>
-	<form action="#" th:action="@{/login/adduser}" th:object="${user}" enctype="multipart/form-data" method="post">
-		<span th:if="${error}" th:text="${error}"></span>
-		<label for="username">Name</label>
-		<input type="text" th:field="*{username}" id="username" placeholder="Username">
-		<span th:if="${#fields.hasErrors('username')}" th:errors="*{username}"></span>
-
-		
-		<label for="password">Password</label>
-		<input type="password" th:field="*{password}" id="password" placeholder="Password">
-		<span th:if="${#fields.hasErrors('password')}" th:errors="password"></span>
-		
-		<input type="submit" value="Login">
+<div class="login-container">
+	<h2>Login</h2>
+	<form th:action="@{/login}" method="post">
+		<div>
+			<label for="username">Username:</label>
+			<input type="text" id="username" name="username" required>
+		</div>
+		<div>
+			<label for="password">Password:</label>
+			<input type="password" id="password" name="password" required>
+		</div>
+		<div>
+			<button type="submit">Login</button>
+		</div>
+		<div th:if="${param.error}">
+			<p style="color:red;">Invalid username or password</p>
+		</div>
+		<div th:if="${param.logout}">
+			<p style="color:green;">You have been logged out</p>
+		</div>
 	</form>
+</div>
 </body>
 </html>
