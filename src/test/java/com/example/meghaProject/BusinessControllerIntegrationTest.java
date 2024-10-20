@@ -67,7 +67,7 @@ public class BusinessControllerIntegrationTest {
         mockMvc.perform(post("/dashboard/business/create")
                 .contentType(MediaType.APPLICATION_FORM_URLENCODED)
                 .param("name", "New Test Business"))
-                .andExpect(status().is3xxRedirection())
+                .andExpect(status().is3xxRedirection()) 
                 .andExpect(redirectedUrl("/dashboard/business"));
 
         List<Business> businesses = businessRepository.findAll();

@@ -1,0 +1,2 @@
+# JMeter generated Cookie file
+	TRUE		FALSE	0	JSESSIONID	${JSESSIONID}
